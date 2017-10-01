@@ -24,7 +24,7 @@ var config = {
     ]
   },
   output: {
-    library: 'ReduxState',
+    library: 'ReduxStateContainer',
     libraryTarget: 'umd'
   },
   plugins: [

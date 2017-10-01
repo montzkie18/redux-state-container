@@ -1,12 +1,12 @@
 {
-  "name": "redux-state",
+  "name": "redux-state-container",
   "version": "0.0.1",
   "description": "Reusable redux state containers",
   "main": "./lib/index.js",
   "scripts": {
     "build:lib": "babel src --out-dir lib",
-    "build:umd": "cross-env NODE_ENV=development webpack src/index.js dist/redux-state.js",
-    "build:umd:min": "cross-env NODE_ENV=production webpack src/index.js dist/redux-state.min.js",
+    "build:umd": "cross-env NODE_ENV=development webpack src/index.js dist/redux-state-container.js",
+    "build:umd:min": "cross-env NODE_ENV=production webpack src/index.js dist/redux-state-container.min.js",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min && node ./prepublish",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/montzkie18/redux-state.git"
+    "url": "git+https://github.com/montzkie18/redux-state-container.git"
   },
   "keywords": [
     "redux",
@@ -29,9 +29,9 @@
   "author": "Ranier Montalbo (ranier.montalbo@gmail.com)",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/montzkie18/redux-state/issues"
+    "url": "https://github.com/montzkie18/redux-state-container/issues"
   },
-  "homepage": "https://github.com/montzkie18/redux-state#readme",
+  "homepage": "https://github.com/montzkie18/redux-state-container#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
