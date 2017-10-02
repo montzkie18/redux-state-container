@@ -101,4 +101,9 @@ export default class CollectionState extends ReduxState {
   );
 
   getById = (state, id) => this.getState(state).byId[id];
+
+  getCount = createSelector(
+    this.getAll,
+    items => items.length
+  );
 }
