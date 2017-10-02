@@ -52,7 +52,7 @@ export default class EntityState extends CollectionState {
     const clearSchema = (objSchema) => {
       // this is the parent schema
       if(objSchema.key === this.schema.key) {
-        dispatch(this.clear());
+        dispatch(this.clearItems());
       }
 
       const childState = this.childStates[objSchema.key];

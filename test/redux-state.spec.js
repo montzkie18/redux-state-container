@@ -15,7 +15,7 @@ class TestState extends ReduxState {
     return {
       ...super.initialState,
       arrayValue: [],
-      objectValue: [],
+      objectValue: {},
     }
   }
 
@@ -73,13 +73,30 @@ describe("ReduxState", () => {
 
   describe("#reducer", () => {
 
-    it("handles default setter action", () => {
+    it("handles default array set action", () => {
       const testState = new TestState(stateKey)
       const newValue = ["Item1", "Item2", "Item3"]
       const newState = {
         [stateKey]: testState.reduce(null, testState.setArrayValue(newValue))
       }
       expect(testState.getArrayValue(newState)).to.deep.equal(newValue)
+    })
+
+    it("handles default object set action", () => {
+      const testState = new TestState(stateKey)
+      const newValue = {"1":{id:"1",name:"Test1"}, "2":{id:"2",name:"Test2"}};
+      const newState = {
+        [stateKey]: testState.reduce(null, testState.setObjectValue(newValue))
+      }
+      expect(testState.getObjectValue(newState)).to.deep.equal(newValue)
+    })
+
+    it("handles reset action", () => {
+      const testState = new TestState(stateKey)
+      const newState = {
+        [stateKey]: testState.reduce(null, testState.reset())
+      }
+      expect(testState.getState(newState)).to.deep.equal(testState.initialState)
     })
 
     it("handles actions defined in class", () => {

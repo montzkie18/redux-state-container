@@ -35,17 +35,23 @@ export default class ReduxState {
     return this.__cache("actionHandlers", this.actionHandlers);
   }
 
+  reset = () => ({
+    type: `${this.stateKey}/RESET`
+  });
+
   reduce = (state, action) => {
     state = state || this.cachedInitialState;
     const params = action.type.split('/');
-    if(params.length === 3 && 
-       params[0] === this.stateKey &&
-       params[1] === 'SET') {
-      return this.__setValue(state, action, params[2]);
-    }else{
-      const handler = this.cachedActionHandlers[action.type];
-      return handler ? handler(state, action) : state;
+    if(params.length >= 2 && params[0] === this.stateKey) {
+      switch(params[1]) {
+        case 'SET':
+          return this.__setValue(state, action, params[2]);
+        case 'RESET':
+          return this.cachedInitialState;
+      }
     }
+    const handler = this.cachedActionHandlers[action.type];
+    return handler ? handler(state, action) : state;
   };
 
   __createGetters = () => {

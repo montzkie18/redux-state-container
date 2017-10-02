@@ -9,7 +9,7 @@ export default class CollectionState extends ReduxState {
       ADD_ITEM:     `${this.stateKey}/ADD_ITEM`,
       REMOVE_ITEM:  `${this.stateKey}/REMOVE_ITEM`,
       REMOVE_ID:    `${this.stateKey}/REMOVE_ID`,
-      CLEAR:        `${this.stateKey}/CLEAR`,
+      CLEAR_ITEMS:  `${this.stateKey}/CLEAR_ITEMS`,
     };
   };
 
@@ -27,7 +27,7 @@ export default class CollectionState extends ReduxState {
         ids: mergeArrays(state.ids, action.ids),
         byId: {
           ...state.byId,
-          ...action.itemsById,
+          ...action.byId,
         },
       }),
       [this.cachedTypes.ADD_ITEM]: (state, action) => {
@@ -62,13 +62,17 @@ export default class CollectionState extends ReduxState {
           return result;
         }, {})
       }),
-      [this.cachedTypes.CLEAR]: (state) => this.initialState
+      [this.cachedTypes.CLEAR_ITEMS]: (state) => ({
+        ...state,
+        ids: [],
+        byId: {},
+      }),
     };
   };
 
-  addItems = (itemsById, ids) => ({
+  addItems = (byId, ids) => ({
     type: this.cachedTypes.ADD_ITEMS,
-    itemsById,
+    byId,
     ids,
   });
 
@@ -87,8 +91,8 @@ export default class CollectionState extends ReduxState {
     id
   });
 
-  clear = () => ({
-    type: this.cachedTypes.CLEAR
+  clearItems = () => ({
+    type: this.cachedTypes.CLEAR_ITEMS
   });
 
   getAll = createSelector(
