@@ -5,6 +5,7 @@ import {mergeArrays} from './utils';
 export default class CollectionState extends ReduxState {
   get types() {
     return {
+      ...super.types,
       ADD_ITEMS:    `${this.stateKey}/ADD_ITEMS`,
       ADD_ITEM:     `${this.stateKey}/ADD_ITEM`,
       REMOVE_ITEM:  `${this.stateKey}/REMOVE_ITEM`,
@@ -15,6 +16,7 @@ export default class CollectionState extends ReduxState {
 
   get initialState() { 
     return {
+      ...super.initialState,
       ids: [],
       byId: {},
     };
@@ -22,6 +24,7 @@ export default class CollectionState extends ReduxState {
 
   get actionHandlers() {
     return {
+      ...super.actionHandlers,
       [this.cachedTypes.ADD_ITEMS]: (state, action) => ({
         ...state,
         ids: mergeArrays(state.ids, action.ids),

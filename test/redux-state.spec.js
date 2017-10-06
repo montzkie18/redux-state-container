@@ -1,7 +1,7 @@
 import {ReduxState} from '../src'
 import {expect} from 'chai'
 
-const stateKey = "test"
+const stateKey = "testState"
 
 class TestState extends ReduxState {
   get types() {

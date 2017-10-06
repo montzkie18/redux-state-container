@@ -4,3 +4,6 @@ export const mergeArrays = (...arrays) => {
 };
 
 export const capitalize = (s = ' ') => s[0].toUpperCase() + s.slice(1);
+
+export const capitalizeCamel = (s = ' ') => 
+  s.replace(/([A-Z])/g, ' $1').split(' ').join('_').toUpperCase();

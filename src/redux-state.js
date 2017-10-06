@@ -1,4 +1,4 @@
-import {capitalize} from './utils';
+import {capitalize, capitalizeCamel} from './utils';
 import {createSelector} from 'reselect';
 
 export default class ReduxState {
@@ -12,7 +12,12 @@ export default class ReduxState {
   }
 
   get types() {
-    return {};
+    const result = {};
+    Object.keys(this.cachedInitialState).forEach(key => {
+      result[`SET_${capitalizeCamel(key)}`] = `${this.stateKey}/SET/${key}`;
+    });
+    result['RESET'] = `${this.stateKey}/RESET`;
+    return result;
   }
 
   get initialState() {
@@ -20,7 +25,14 @@ export default class ReduxState {
   }
 
   get actionHandlers() {
-    return {};
+    const result = {};
+    Object.keys(this.cachedInitialState).forEach(key => {
+      result[this.cachedTypes[`SET_${capitalizeCamel(key)}`]] = (state, action) => {
+        return this.__setValue(state, action, key);
+      };
+    });
+    result[this.cachedTypes.RESET] = this.__resetValue;
+    return result;
   }
 
   get cachedTypes() {
@@ -41,15 +53,6 @@ export default class ReduxState {
 
   reduce = (state, action) => {
     state = state || this.cachedInitialState;
-    const params = action.type.split('/');
-    if(params.length >= 2 && params[0] === this.stateKey) {
-      switch(params[1]) {
-        case 'SET':
-          return this.__setValue(state, action, params[2]);
-        case 'RESET':
-          return this.cachedInitialState;
-      }
-    }
     const handler = this.cachedActionHandlers[action.type];
     return handler ? handler(state, action) : state;
   };
@@ -68,7 +71,7 @@ export default class ReduxState {
     Object.keys(this.cachedInitialState).forEach(key => {
       // console.log(`State [${this.stateKey}] creating setter [set${capitalize(key)}]`)
       this[`set${capitalize(key)}`] = (value) => ({
-        type: `${this.stateKey}/SET/${key}`,
+        type: this.cachedTypes[`SET_${capitalizeCamel(key)}`],
         [key]: value
       });
     });
@@ -78,6 +81,8 @@ export default class ReduxState {
     ...state,
     [key]: this.__clone(action[key]),
   });
+
+  __resetValue = (state, action) => this.cachedInitialState;
 
   __clone = (obj) => {
     if(obj && obj.constructor === Array)
