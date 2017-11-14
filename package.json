@@ -1,6 +1,6 @@
 {
   "name": "redux-state-container",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Reusable redux state containers",
   "main": "./lib/index.js",
   "scripts": {
