@@ -19,7 +19,7 @@ export default class EntityState extends CollectionState {
     const entities = {...normalize.entities};
     Object.keys(entities).forEach(name => {
       if(name === this.schema.key) {
-        const items = entities[name];
+        const items = {...entities[name]};
         dispatch(this.addItems(items, Object.keys(items)))
         delete entities[name];
       }else if(this.childStates[name] && 
