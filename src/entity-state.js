@@ -16,7 +16,7 @@ export default class EntityState extends CollectionState {
   };
 
   setNormalizedData = (normalized) => (dispatch) => {
-    const entities = {...normalize.entities};
+    const entities = {...normalized.entities};
     Object.keys(entities).forEach(name => {
       if(name === this.schema.key) {
         const items = {...entities[name]};
