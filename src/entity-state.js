@@ -16,13 +16,15 @@ export default class EntityState extends CollectionState {
   };
 
   setNormalizedData = (normalized) => (dispatch) => {
-    Object.keys(normalized.entities).forEach(name => {
+    const entities = {...normalize.entities};
+    Object.keys(entities).forEach(name => {
       if(name === this.schema.key) {
-        const entities = normalized.entities[name];
-        dispatch(this.addItems(entities, Object.keys(entities)))
+        const items = entities[name];
+        dispatch(this.addItems(items, Object.keys(items)))
+        delete entities[name];
       }else if(this.childStates[name] && 
         this.childStates[name].setNormalizedData) {
-        dispatch(this.childStates[name].setNormalizedData(normalized));
+        dispatch(this.childStates[name].setNormalizedData({entities}));
       }
     });
   };
