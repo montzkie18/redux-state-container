@@ -27,8 +27,8 @@ describe("CollectionState", () => {
         [stateKey]: collection.reduce(null, collection.addItems(newValue, newIds))
       }
       expect(collection.getIds(state)).to.deep.equal(newIds)
-      expect(collection.getById(state, 1)).to.equal(object1)
-      expect(collection.getById(state, 2)).to.equal(object2)
+      expect(collection.getById(state, 1)).to.deep.equal(object1)
+      expect(collection.getById(state, 2)).to.deep.equal(object2)
     })
   })
 
@@ -39,7 +39,7 @@ describe("CollectionState", () => {
         [stateKey]: collection.reduce(null, collection.addItem(object1))
       }
       expect(collection.getIds(state)).to.deep.equal([object1.id])
-      expect(collection.getById(state, 1)).to.equal(object1)
+      expect(collection.getById(state, 1)).to.deep.equal(object1)
     })
   })
 

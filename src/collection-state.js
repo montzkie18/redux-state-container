@@ -1,6 +1,6 @@
 import ReduxState from './redux-state'
 import {createSelector} from 'reselect';
-import {mergeArrays} from './utils';
+import {mergeArrays, mergeObjects} from './utils';
 
 export default class CollectionState extends ReduxState {
   get types() {
@@ -28,20 +28,16 @@ export default class CollectionState extends ReduxState {
       [this.cachedTypes.ADD_ITEMS]: (state, action) => ({
         ...state,
         ids: mergeArrays(state.ids, action.ids),
-        byId: {
-          ...state.byId,
-          ...action.byId,
-        },
+        byId: mergeObjects(state.byId, action.byId),
       }),
       [this.cachedTypes.ADD_ITEM]: (state, action) => {
         if(!action.item) return state;
         return {
           ...state,
           ids: mergeArrays(state.ids, [action.item.id]),
-          byId: {
-            ...state.byId,
+          byId: mergeObjects(state.byId, {
             [action.item.id]: action.item
-          }
+          })
         }
       },
       [this.cachedTypes.REMOVE_ITEM]: (state, action) => {
