@@ -107,7 +107,7 @@ describe("CollectionState", () => {
       const collection = new CollectionState(stateKey)
       const items = [{id: 1}, {id:2}, {id:3}]
       const newState = {
-        [stateKey]: collection.addItems(items)
+        [stateKey]: collection.addItems(items, Object.keys(items))
       }
       expect(collection.getCount(newState)).to.equal(3)
     })

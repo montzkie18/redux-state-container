@@ -27,7 +27,7 @@ export default class CollectionState extends ReduxState {
       ...super.actionHandlers,
       [this.cachedTypes.ADD_ITEMS]: (state, action) => ({
         ...state,
-        ids: mergeArrays(state.ids, action.ids),
+        ids: mergeArrays(state.ids, action.ids || Object.keys(action.byId)),
         byId: mergeObjects(state.byId, action.byId),
       }),
       [this.cachedTypes.ADD_ITEM]: (state, action) => {
@@ -96,7 +96,7 @@ export default class CollectionState extends ReduxState {
 
   getAll = createSelector(
     this.getState,
-    state => Object.keys(state.byId).map(id => state.byId[id])
+    state => state.ids.map(id => state.byId[id])
   );
 
   getById = (state, id) => this.getState(state).byId[id];
