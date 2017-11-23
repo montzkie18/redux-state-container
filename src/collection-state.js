@@ -46,7 +46,7 @@ export default class CollectionState extends ReduxState {
           ...state,
           ids: state.ids.filter(id => id !== action.item.id),
           byId: Object.keys(state.byId).reduce((result, key) => {
-            if(key !== action.item.id)
+            if(key !== (action.item.id + ""))
               result[key] = state.byId[key];
             return result;
           }, {})
@@ -56,7 +56,7 @@ export default class CollectionState extends ReduxState {
         ...state,
         ids: state.ids.filter(id => id !== action.id),
         byId: Object.keys(state.byId).reduce((result, key) => {
-          if(key !== action.id)
+          if(key !== (action.id + ""))
             result[key] = state.byId[key];
           return result;
         }, {})
